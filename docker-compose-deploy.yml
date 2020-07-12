@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - static_data:/vol/web
+    environment:
+      - SECRET_KEY=(pf7yg5nxa*ezxdwbzr&rah5xzh!kw^uo=$$90x6#zcj3ex@3a2
+      - ALLOWED_HOSTS=127.0.0.1,localhost,ec2-34-221-54-195.us-west-2.compute.amazonaws.com
+
+  proxy:
+    build:
+      context: ./proxy
+    volumes:
+      - static_data:/vol/static
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+
+volumes:
+  static_data:
